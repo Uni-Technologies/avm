@@ -7,6 +7,7 @@ mod vmcodes;
 // Architectures
 mod avm_bcs1;
 mod avm_ecs1;
+mod avm_uacs1;
 
 // Uses
 use base::Memory;
@@ -32,6 +33,7 @@ fn main_main() {
     if args.len() > 2
     {
         if args.contains(&String::from("--ecs1")) { type_of_vm = VMTypes::ECS1; }
+        if args.contains(&String::from("--uacs1")) { type_of_vm = VMTypes::UACS1; }
         path = args[1].to_string();
     }
     else {
@@ -48,18 +50,22 @@ fn test_main() {
         itself: [0; 0xFFFF]
     };
     let operations: Vec<Vec<i32>> = vec![
-        vec![0x01, 0x0, 0x21],
-        vec![0x03, 0x0],
-        vec![0x13],
-        vec![0x03, 0x0],
-        vec![0x03, 0x0],
-        vec![0x03, 0x0],
+        vec![0x0B, 0x0, 0x21, 0x21, 0x21, 0x21,], //1
+        vec![0x0A, 0x4, 0x7], // 2
+        vec![0x7, 0x0, 0x0, 0x4, 0x5], // 3
+        vec![0x13], // 4
+        vec![0x03, 0x0], // 5
+        vec![0x03, 0x0], // 6
         ];
     start_up(&mut base_mem, operations, VMTypes::ECS1);
 }
 
 fn main() {
+<<<<<<< Updated upstream
     main_main();
+=======
+    main_main(); 
+>>>>>>> Stashed changes
 }
 
 fn load_from_file(path: String) -> Vec<Vec<i32>> {
@@ -100,16 +106,16 @@ fn start_up(memory: &mut Memory, operations: Vec<Vec<i32>>, _vm: VMTypes) -> VMC
     let instructions: Vec<(i32, fn(&mut Memory, Vec<i32>,&mut i32) -> VMCode)> =
     match _vm {
         VMTypes::BCS1 => avm_bcs1::get_instructions_for_bcs1(),
-        VMTypes::ECS1 => avm_ecs1::get_instructions_for_ecs1()
+        VMTypes::ECS1 => avm_ecs1::get_instructions_for_ecs1(),
+        VMTypes::UACS1=> avm_uacs1::get_instructions_for_uacs1()
     };
 
     let mut i: i32 = 0;
     while i < operations.len() as i32 {
         
         let line = &operations[i as usize];
-        for b in 0..=instructions.len() {
+        for b in 0..instructions.len() {
             if instructions[b].0.eq(&line[0]) {
-                
                 let c: Vec<i32> = line[1..].to_vec();
                 instructions[b].1(memory, c, &mut i);
                 break;
@@ -117,6 +123,7 @@ fn start_up(memory: &mut Memory, operations: Vec<Vec<i32>>, _vm: VMTypes) -> VMC
         }
         i+=1;
     }
+    print!("\x1b[0m");
 
     return VMCode::Success;
 }

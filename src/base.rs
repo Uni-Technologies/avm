@@ -2,7 +2,8 @@ use crate::vmcodes::VMCode;
 #[allow(unused)]
 pub enum VMTypes {
     BCS1,
-    ECS1
+    ECS1,
+    UACS1
 }
 
 pub struct Memory {

@@ -41,6 +41,7 @@ pub fn shutdown(memory: &mut Memory, _args: Vec<i32>, _curr_op: &mut i32) -> VMC
     return VMCode::Success;
 }
 
+
 pub fn get_instructions_for_ecs1() ->Vec<(i32, fn(&mut Memory, Vec<i32>,&mut i32) -> VMCode)> {
     return vec![
         (0x00, add_from),
@@ -62,6 +63,6 @@ pub fn get_instructions_for_ecs1() ->Vec<(i32, fn(&mut Memory, Vec<i32>,&mut i32
         (0x10, dwr1),
         (0x11, dwr2),
         (0x12, out_itself),
-        (0x13, shutdown),
+        (0x13, shutdown)
     ];
 }
