@@ -61,11 +61,9 @@ fn test_main() {
 }
 
 fn main() {
-<<<<<<< Updated upstream
     main_main();
-=======
+
     main_main(); 
->>>>>>> Stashed changes
 }
 
 fn load_from_file(path: String) -> Vec<Vec<i32>> {
