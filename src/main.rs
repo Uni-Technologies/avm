@@ -59,7 +59,7 @@ fn test_main() {
 }
 
 fn main() {
-    test_main(); // Replace with main_main(); 
+    main_main();
 }
 
 fn load_from_file(path: String) -> Vec<Vec<i32>> {
