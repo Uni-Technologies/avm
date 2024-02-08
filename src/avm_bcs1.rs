@@ -41,7 +41,7 @@ pub fn out_range(memory: &mut Memory, _args: Vec<i32>, _curr_op: &mut i32) -> VM
     for i in _args[0] as usize.._args[1]  as usize{
         
         let a = memory.get_by(i) ;
-        if a >= 32
+        if a >= 0
         {
             let ch = char::from_u32(a as u32).expect("out range error");
             eprint!("{}", ch);
