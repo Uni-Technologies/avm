@@ -105,7 +105,7 @@ fn start_up(memory: &mut Memory, operations: Vec<Vec<i32>>, _vm: VMTypes) -> VMC
         VMTypes::ECS1 => avm_ecs1::get_instructions_for_ecs1(),
         VMTypes::UACS1=> avm_uacs1::get_instructions_for_uacs1()
     };
-    println!("{:?}", operations);
+    
     let mut i: i32 = 0;
     while i < operations.len() as i32 {
         if operations.len() > 0 {
