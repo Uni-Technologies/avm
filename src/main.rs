@@ -61,8 +61,6 @@ fn test_main() {
 }
 
 fn main() {
-    main_main();
-
     main_main(); 
 }
 
@@ -107,16 +105,19 @@ fn start_up(memory: &mut Memory, operations: Vec<Vec<i32>>, _vm: VMTypes) -> VMC
         VMTypes::ECS1 => avm_ecs1::get_instructions_for_ecs1(),
         VMTypes::UACS1=> avm_uacs1::get_instructions_for_uacs1()
     };
-
+    println!("{:?}", operations);
     let mut i: i32 = 0;
     while i < operations.len() as i32 {
-        
-        let line = &operations[i as usize];
-        for b in 0..instructions.len() {
-            if instructions[b].0.eq(&line[0]) {
-                let c: Vec<i32> = line[1..].to_vec();
-                instructions[b].1(memory, c, &mut i);
-                break;
+        if operations.len() > 0 {
+            let line = &operations[i as usize];
+            for b in 0..instructions.len() {
+                if line.len() != 0 {
+                    if instructions[b].0.eq(&line[0]) {
+                        let c: Vec<i32> = line[1..].to_vec();
+                        instructions[b].1(memory, c, &mut i);
+                        break;
+                    }
+                }
             }
         }
         i+=1;
